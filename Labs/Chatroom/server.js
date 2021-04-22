@@ -5,6 +5,7 @@ const file = require("./messages.json");
 const fs = require("fs");
 const url = require("url");
 const users = ["Steve", "Jack"];
+
 randomUser = function (users) {
   return users[Math.floor(Math.random() * users.length)];
 };
@@ -44,6 +45,7 @@ htmlView = function (file) {
   }
   return newObj;
 };
+
 const server = http.createServer((req, res) => {
   let newUrl = new URL(`http://localhost:${portNumber}${req.url}`);
 
@@ -70,12 +72,30 @@ const server = http.createServer((req, res) => {
     res.end(`
     <!doctype html>
     <html>
+    <head>
+      <script type="text/javascript">
+        function onDocumentReady(){
+          const form = document.querySelector("form");
+          form.addEventListener("submit", submitHandler);
+
+          function submitHandler(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            const value = Object.fromEntries(data.entries());
+            console.log(value);
+          }
+        }
+      </script>
+    </head>
     <body>
         <div class = "messages">
           ${htmlCode}
         </div>
         <form action="/messages" method="post">
+            <label for="username">Username</label>
             <input type="text" name="username" /><br />
+
+            <label for="message">Message</label>
             <input type="text" name="message" /><br />
             <button>Save</button>
         </form>
@@ -113,4 +133,15 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ Message: "Route not found" }));
   }
 });
+
+// function submitHandler(event) {
+//   event.preventDefault();
+//   const data = new FormData(event.target);
+//   const value = Object.fromEntries(data.entries());
+//   console.log(value);
+// }
+
+// const form = document.querySelector("form");
+// form.addEventListener("submit", submitHandler);
+
 server.listen(portNumber, () => console.log(`listening on port ${portNumber}`));
