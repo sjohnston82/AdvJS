@@ -31,7 +31,7 @@ function update() {
   const inputBar = document.getElementById("input-bar");
   const newTaskText = inputBar.value;
   tasks.push({ text: newTaskText, completed: false });
-  console.log(tasks);
+  console.table([tasks]);
   inputBar.value = "";
 
   var newList = list(tasks, update);

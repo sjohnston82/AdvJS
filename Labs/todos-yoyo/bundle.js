@@ -10,6 +10,12 @@ const tasks = [
   { text: "clean garage", completed: false },
 ];
 
+const tasks1 = [
+  { text: "wasda dog", completed: false },
+  { text: "leaasdyo", completed: true },
+  { text: "clean garage", completed: false },
+];
+
 const el = list(tasks, update);
 
 const tasksDiv = document.getElementById("tasks-div");
@@ -34,7 +40,7 @@ function update() {
   const inputBar = document.getElementById("input-bar");
   const newTaskText = inputBar.value;
   tasks.push({ text: newTaskText, completed: false });
-  console.log(tasks);
+  console.table([tasks, tasks1]);
   inputBar.value = "";
 
   var newList = list(tasks, update);
